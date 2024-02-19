@@ -7,7 +7,7 @@ import re
 from dataclasses import dataclass
 from functools import cached_property
 
-from tic_tac_toe.logic.validators import validate_grid
+from tic_tac_toe.logic.validators import validate_game_state, validate_grid
 
 WINNING_PATTERNS = (
     "???......",
@@ -62,6 +62,9 @@ class Move:
 class GameState:
     grid: Grid
     starting_mark: Mark = Mark("X")
+
+    def __post_init__(self) -> None:
+        validate_game_state(self)
 
     @cached_property
     def current_mark(self) -> Mark:
